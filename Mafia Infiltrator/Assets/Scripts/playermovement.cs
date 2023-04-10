@@ -9,6 +9,7 @@ public class playermovement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 20f;
     private bool isFacingRight= true;
+    public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -17,7 +18,9 @@ public class playermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         horizontal = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
         if(Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);

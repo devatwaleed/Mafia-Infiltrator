@@ -40,9 +40,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1204498271
+    locked: 0
+  - name: Door
+    uniqueID: 3108815729
+    locked: 0
+  - name: Path
+    uniqueID: 3335396979
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Platform
-    uniqueID: 2736745667
+  - name: Player
+    uniqueID: 1222604813
     locked: 0
