@@ -40,6 +40,7 @@ namespace Spriter2UnityDX.Prefabs {
 				if (prefab == null) { //Creates an empty prefab if one doesn't already exists
 					instance = new GameObject (entity.name);
 					prefab = PrefabUtility.CreatePrefab (prefabPath, instance, ReplacePrefabOptions.ConnectToPrefab);
+					
 					ProcessingInfo.NewPrefabs.Add (prefab);
 				}
 				else {
