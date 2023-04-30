@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +19,7 @@ public class ButtonScript : MonoBehaviour
             popupPanel.SetActive(true);
         }
     }
+
     public void ClosePopup()
     {
         popupPanel.SetActive(false);
