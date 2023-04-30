@@ -11,9 +11,7 @@ public class enemyPatrol : MonoBehaviour
     private Transform currentPoint;
     public float speed;
     private GameObject player;
-    private Collider2D enemyCollider; // Reference to the enemy collider
-    private Collider2D playerCollider;
-    
+    private bool isPlayerDetected = false;
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -26,28 +24,58 @@ public class enemyPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        Vector2 point=currentPoint.position-transform.position;
-        if(currentPoint==pointB.transform){
-            rb.velocity= new Vector2(speed,0);
+        // Set the playerDetected parameter in the Animator controller
+        anim.SetBool("playerDetected", isPlayerDetected);
+
+        if (isPlayerDetected) // If player is detected, play kicking animation
+        {
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isKicking", true);
         }
-        else{
-            rb.velocity= new Vector2(-speed,0);
+        else // Otherwise, play base animation and continue patrolling
+        {
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isKicking", false);
+
+            Vector2 point=currentPoint.position-transform.position;
+            if(currentPoint==pointB.transform){
+                rb.velocity= new Vector2(speed,0);
+            }
+            else{
+                rb.velocity= new Vector2(-speed,0);
+            }
+            if(Vector2.Distance(transform.position,currentPoint.position) < 0.5f && currentPoint==pointB.transform){
+                flip();
+                currentPoint=pointA.transform;
+            }
+            if(Vector2.Distance(transform.position,currentPoint.position) < 0.5f && currentPoint==pointA.transform){
+                flip();
+                currentPoint=pointB.transform;
+            }
         }
-        if(Vector2.Distance(transform.position,currentPoint.position) < 0.5f && currentPoint==pointB.transform){
-            flip();
-            currentPoint=pointA.transform;
-        }
-        if(Vector2.Distance(transform.position,currentPoint.position) < 0.5f && currentPoint==pointA.transform){
-            flip();
-            currentPoint=pointB.transform;
-        }
-        
     }
+
     private void flip(){
         Vector3 localScale= transform.localScale;
         localScale.x *=-1;
         transform.localScale=localScale;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerDetected = true;
+        }
+    }
+
+    // Stop detecting the collision between the enemy and the player
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerDetected = false;
+        }
     }
     
 }
