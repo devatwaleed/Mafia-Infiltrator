@@ -49,15 +49,5 @@ public class enemyPatrol : MonoBehaviour
         localScale.x *=-1;
         transform.localScale=localScale;
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        while(other.CompareTag("Player")){
-            anim.SetBool("isRunning",false);
-            anim.SetBool("isKicking",true);
-            if(!other.CompareTag("Player")){
-                anim.SetBool("isRunning",true);
-            anim.SetBool("isKicking",false);
-            }
-        }
-    }
+    
 }
