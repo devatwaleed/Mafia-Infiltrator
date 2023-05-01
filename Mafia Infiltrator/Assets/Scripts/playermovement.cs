@@ -14,6 +14,7 @@ public class playermovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private AudioSource engageWithSomthing;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +31,10 @@ public class playermovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y*0.5f);
         }
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            engageWithSomthing.Play();
+        }
         Flip();
     }
 
