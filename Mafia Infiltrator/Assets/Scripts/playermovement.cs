@@ -1,6 +1,7 @@
+using UnityEngine;  
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 
 public class playermovement : MonoBehaviour
@@ -8,7 +9,7 @@ public class playermovement : MonoBehaviour
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 20f;
-    private bool isFacingRight= true;
+    private bool isFacingRight = true;
     public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
@@ -16,20 +17,25 @@ public class playermovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private AudioSource engageWithSomthing;
 
+    void Start()
+    {
+        animator = GetComponent<Animator>(); // assign the Animator component to the animator variable
+    }
+
     // Update is called once per frame
     void Update()
     {
         
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if(Input.GetButtonDown("Jump") && isGrounded())
+        if (Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (Input.GetButtonDown("Jump") && rb.velocity.y>0f)
+        if (Input.GetButtonDown("Jump") && rb.velocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y*0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -50,7 +56,7 @@ public class playermovement : MonoBehaviour
 
     private void Flip()
     {
-        if (isFacingRight && horizontal <0f || !isFacingRight && horizontal >0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -58,4 +64,6 @@ public class playermovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+
+    
 }
