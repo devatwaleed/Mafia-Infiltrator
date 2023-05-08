@@ -10,7 +10,6 @@ public class playermovement : MonoBehaviour
 {
     private float horizontal;
     public   float speed = 8f;
-    private float jumpingPower = 20f;
     private bool isFacingRight = true;
     public Animator animator;
 
@@ -42,24 +41,23 @@ public class playermovement : MonoBehaviour
     
     public void PointerDownLeft(){
         moveLeft=true;
-        Debug.Log("Left true");
+        Debug.Log("left is true");
     }
 
     public void PointerUpLeft(){
         moveLeft=false;
-        Debug.Log("Left false");
+        Debug.Log("left is false");
     }
 
     public void PointerDownRight(){
         moveRight=true;
-        Debug.Log("Right true");
+        Debug.Log("right is true");
     }
 
     public void PointerUpRight(){
         moveRight=false;
-        Debug.Log("Right false");
+        Debug.Log("right is false");
     }
-
 
     // Update is called once per frame
     void Update()
@@ -68,36 +66,23 @@ public class playermovement : MonoBehaviour
         MovePlayer();
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if (Input.GetButtonDown("Jump") && isGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-        }
-
-        if (Input.GetButtonDown("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
 
         Flip();
     }
 
     private void MovePlayer(){
         if(moveLeft){
-        Debug.Log("the move left is 2 "+moveLeft);
-        Debug.Log("the move right is 2 "+moveRight);
             horizontal=-speed;
-            Debug.Log("left"+horizontal);
             
         }else if(moveRight){
             horizontal=speed;
             
-        Debug.Log("the move left is 3"+moveLeft);
-        Debug.Log("the move right is 3"+moveRight);
-            Debug.Log("right"+horizontal);
         }else{
             horizontal=0;
         }
     }
+
+
 
     private void FixedUpdate()
     {
