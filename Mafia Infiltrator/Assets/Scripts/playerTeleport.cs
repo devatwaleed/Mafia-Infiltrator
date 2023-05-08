@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerTeleport : MonoBehaviour
 {
+    [SerializeField] private Button interactButton;
     private GameObject currentTeleporter;
 
     void Start()
     {
-        
+        interactButton.onClick.AddListener(OnInteractButtonClicked);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnInteractButtonClicked()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (currentTeleporter != null)
         {
-            if (currentTeleporter != null)
-            {
-                transform.position = currentTeleporter.GetComponent<Teleporter>().GetDestination().position;
-            }
+            transform.position = currentTeleporter.GetComponent<Teleporter>().GetDestination().position;
         }
     }
 
