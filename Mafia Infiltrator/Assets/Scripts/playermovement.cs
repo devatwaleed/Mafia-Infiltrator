@@ -1,4 +1,4 @@
-using UnityEngine;  
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -19,13 +19,17 @@ public class playermovement : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>(); // assign the Animator component to the animator variable
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component is missing!");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         if (Input.GetButtonDown("Jump") && isGrounded())
@@ -64,6 +68,4 @@ public class playermovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
-
-    
 }

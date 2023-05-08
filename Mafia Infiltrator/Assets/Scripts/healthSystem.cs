@@ -66,6 +66,7 @@ public class healthSystem : MonoBehaviour
     {
         // Player detected by second collider, set enemyTouch to true
         enemyTouch = true;
+        Debug.Log("Game Over22");
     }
 }
 
@@ -81,6 +82,7 @@ public class healthSystem : MonoBehaviour
         {
             // Player no longer detected by second collider, set enemyTouch to false
             enemyTouch = false;
+            Debug.Log("Game Over222");
         }
     }
 
