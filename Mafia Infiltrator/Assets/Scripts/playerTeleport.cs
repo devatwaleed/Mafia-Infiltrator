@@ -25,6 +25,7 @@ public class playerTeleport : MonoBehaviour
     {
         if (collision.CompareTag("Teleporter"))
         {
+            Debug.Log("tatti");
             currentTeleporter = collision.gameObject;
         }
     }

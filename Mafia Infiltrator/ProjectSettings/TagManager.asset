@@ -8,6 +8,7 @@ TagManager:
   - Teleporter
   - Enemy
   - EnemyDetection
+  - AccessButton
   layers:
   - Default
   - TransparentFX
