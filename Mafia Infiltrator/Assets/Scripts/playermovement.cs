@@ -9,9 +9,14 @@ using UnityEngine.EventSystems;
 public class playermovement : MonoBehaviour
 {
     private float horizontal;
+
+    private float vertical;
+
     public   float speed = 8f;
     private bool isFacingRight = true;
     public Animator animator;
+
+    private bool isLadder;
 
  
  
@@ -23,6 +28,8 @@ public class playermovement : MonoBehaviour
 
     private bool moveLeft;
     private bool moveRight;
+
+    private bool moveUp;
     public Button actionButton;
 
     void Start()
@@ -33,6 +40,7 @@ public class playermovement : MonoBehaviour
         animator = GetComponent<Animator>();
         moveLeft=false;
         moveRight=false;
+        moveUp=false;
         if (animator == null)
         {
             Debug.LogError("Animator component is missing!");
@@ -41,22 +49,28 @@ public class playermovement : MonoBehaviour
     
     public void PointerDownLeft(){
         moveLeft=true;
-        Debug.Log("left is true");
     }
 
     public void PointerUpLeft(){
         moveLeft=false;
-        Debug.Log("left is false");
     }
 
     public void PointerDownRight(){
         moveRight=true;
-        Debug.Log("right is true");
     }
 
     public void PointerUpRight(){
         moveRight=false;
-        Debug.Log("right is false");
+    }
+
+    public void PointerDownClimb(){
+        moveUp=true;
+        Debug.Log("Up is true");
+    }
+
+    public void PointerUpClimb(){
+        moveUp=false;
+        Debug.Log("Up is false");
     }
 
     // Update is called once per frame
@@ -66,18 +80,27 @@ public class playermovement : MonoBehaviour
         MovePlayer();
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        if(isLadder){
+            animator.SetFloat("Speed", Mathf.Abs(vertical));
+        }else{
 
+        }
         Flip();
     }
 
     private void MovePlayer(){
         if(moveLeft){
             horizontal=-speed;
+            Debug.Log(horizontal);
             
         }else if(moveRight){
             horizontal=speed;
+            Debug.Log(horizontal);
             
-        }else{
+        }else if(moveUp){
+            vertical=speed;
+            Debug.Log(vertical);
+            }else{
             horizontal=0;
         }
     }
@@ -87,6 +110,7 @@ public class playermovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal, rb.velocity.y);
+        rb.velocity = new Vector2(rb.velocity.x, vertical);
     }
 
     private bool isGrounded()
@@ -105,9 +129,21 @@ public class playermovement : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = true;
+        }
+    }
 
-    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = false;
+        }
+    }
 
     private void EngageWithSomething()
     {
