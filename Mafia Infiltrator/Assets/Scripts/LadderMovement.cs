@@ -10,19 +10,21 @@ public class LadderMovement : MonoBehaviour
     private bool isClimbing;
 
     [SerializeField] private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         vertical = Input.GetAxis("Vertical");
-        if(isLadder && Mathf.Abs(vertical) > 0f)
+
+        if (isLadder)
         {
-            isClimbing = true;
+            if (Mathf.Abs(vertical) > 0f)
+            {
+                isClimbing = true;
+            }
+            else
+            {
+                isClimbing = false;
+            }
         }
     }
 
@@ -31,28 +33,34 @@ public class LadderMovement : MonoBehaviour
         if (isClimbing)
         {
             rb.gravityScale = 0f;
-            rb.velocity = new Vector2(rb.velocity.x, vertical*speed);
+            rb.velocity = new Vector2(rb.velocity.x, vertical * speed);
         }
         else
         {
             rb.gravityScale = 4f;
+
+            if (!isLadder)
+            {
+                // Stop moving upwards when not on the ladder
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Ladder"))
     {
-        if (collision.CompareTag("Ladder"))
-        {
-            isLadder = true;
-        }
+        Debug.Log("Entered Ladder");
     }
+}
 
-    private void OnTriggerExit2D(Collider2D collision)
+void OnTriggerExit2D(Collider2D other)
+{
+    if (other.CompareTag("Ladder"))
     {
-        if (collision.CompareTag("Ladder"))
-        {
-            isLadder = false;
-            isClimbing = false;
-        }
+        Debug.Log("Exited ladder");
     }
+}
+
 }

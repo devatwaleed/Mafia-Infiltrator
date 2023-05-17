@@ -7,9 +7,8 @@ public class cctvcolliderscript : MonoBehaviour
     private bool isPlayerDetected = false;
     void Update(){
         if(isPlayerDetected){
-            Debug.Log("Teri mkc");
+            Debug.Log("Player Detected");
         }else{
-            Debug.Log("not");
         }
     }
    private void OnTriggerEnter2D(Collider2D other)

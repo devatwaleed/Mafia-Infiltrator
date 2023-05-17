@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - EnemyDetection
   - AccessButton
+  - Path
+  - Floor
   layers:
   - Default
   - TransparentFX
